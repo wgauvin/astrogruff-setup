@@ -1,0 +1,11 @@
+[Unit]
+Description=noVnc service
+After=network.target x11vnc-proxy.socket nginx.service
+Requires=x11vnc.service nginx.service
+
+[Service]
+ExecStart=/bin/bash -c 'novnc --listen 6081 --vnc localhost:5900'
+User=astrogruff
+
+[Install]
+WantedBy=graphical.target
