@@ -19,19 +19,28 @@ Update the mirror list and then the system, helps speed things up.
 pacman-mirrors -aS unstable
 pacman-mirrors --geoip
 pacman -Syyuu
+pacman -S git
 ```
 
-Update to the mainline kernel
+The git package is needed to this repo can be checked out locally on the
+server. With the `astrogruff` user checkout out this repo
 
 ```
-pacman -S - < system-packages.txt
+git clone https://github.com/wgauvin/astrogruff-setup.git
+```
+
+Setup up the base system with the base system packages, including
+using the `linux-rpi4-mainline` kernel.
+
+```
+pacman -S - < packages/system-packages.txt
 ```
 
 Reboot server, and log in as `astrogruff` and then install
-the useful packages
+the useful packages.
 
 ```
-yay -S - < useful-packages.txt
+yay -S - < packages/useful-packages.txt
 ```
 
 # Setup astrogruff user with ZSH
@@ -42,21 +51,21 @@ Set default shell to zsh:
 chsh --shell /bin/zsh astrogruff
 ```
 
-Copy `.zshrc` to `${HOME}` setup `zsh`. Log out and back in
-to have `zsh` being the default shell.
+From this repo, copy `astrogruff/.zshrc` to `${HOME}` setup `zsh`. Log out
+and back in to have `zsh` being the default shell.
 
 # Setup VNC / noVNC
 
 Install the `vnc` packages using:
 
 ```
-yay -S - < vnc-packages.txt
+yay -S - < packages/vnc-packages.txt
 ```
 
 To enable the `vnc` to come up as part of the X11 startup need to add
 an autologin for the sddm (see above and in the SDDM wiki), using a dummy screen ()
 
-Copy the `xorg-conf-headless.conf` to `/etc/X11/xorg.conf.d/05-headless.conf`
+Copy the contents `etc/X11/xorg.conf.d/` to `/etc/X11/xorg.conf.d/`
 
 As `astrogruff` set the VNC password via
 
@@ -64,8 +73,8 @@ As `astrogruff` set the VNC password via
 x11vnc -storepasswd
 ```
 
-* copy the `vnc-config` file `~/.vnc/config`
-* copy the `x11vnc-service-override.conf` to `/etc/systemd/system/x11vnc.service.d/override.conf`
+* copy `astrogruff/.vnc/` file `${HOME}/.vnc/`
+* copy `etc/systemd/system/x11vnc.service.d/` to `/etc/systemd/system/x11vnc.service.d/`
 * enable the `x11vnc.service` using the following commands:
 
 ```
@@ -73,7 +82,7 @@ sudo systemctl daemon-reload
 sudo systemctl enable --now x11vnc.service
 ```
 
-Copy `novnc.service` to `/etc/systemd/system` and then enable service:
+Copy `/etc/systemd/system/novnc.service` to `/etc/systemd/system` and then enable service:
 
 ```
 sudo systemctl daemon-reload
@@ -81,19 +90,17 @@ sudo systemctl enable --now novnc.service
 ```
 
 * TODO - document nginx.conf
-  * make sure set up SSL
-  *
-
+* TODO - make sure set up SSL
 
 # Setting up Astro parts
 
 Install the astro packages with:
 
 ```
-yay -S - < astro-packages.txt
+yay -S - < packages/astro-packages.txt
 ```
 
-* copy the `udev-custom.rules` to `/etc/udev/rules.d/49-custom.rules`
+Copy all the `udev` rules in  `etc/udev/rules.d` to `/etc/udev/rules.d/`
 
 If there is an issue with parsing the udev rule then none of the rules
 would be applied. To check use the following commands:
@@ -112,7 +119,7 @@ sudo usermod -a -G uucp astrogruff
 
 ## Setup of GPSD
 
-Copy `gpsd` to `/etc/defaults/gpsd`
+Copy `etc/defaults/gpsd` to `/etc/defaults/gpsd`
 
 Enable the `gpsd.socket` with:
 
@@ -125,14 +132,10 @@ sudo systemctl enable --now gpsd.socket
 Install `desktop-packages.txt`
 
 ```
-yay -S - < desktop-packages.txt
+yay -S - < packages/desktop-packages.txt
 ```
 
 * set compositor to `XRender`
-
-|Setting|Package|
-|-------|-------|
-|Global Theme|Infinity-Global|
 
 The addons will allow for a picture of the day (POTD) wallpaper, the **Unsplash Wallpapers** with
 the galaxy theme
