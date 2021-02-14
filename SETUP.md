@@ -73,15 +73,17 @@ sudo systemctl daemon-reload
 sudo systemctl enable --now x11vnc.service
 ```
 
-## TODO - document novnc
-* nginx install and config
-
 Copy `novnc.service` to `/etc/systemd/system` and then enable service:
 
 ```
 sudo systemctl daemon-reload
 sudo systemctl enable --now novnc.service
 ```
+
+* TODO - document nginx.conf
+  * make sure set up SSL
+  *
+
 
 # Setting up Astro parts
 
