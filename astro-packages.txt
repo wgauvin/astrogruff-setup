@@ -1,8 +1,7 @@
 kstars
 xplanet
-libdc1394
+libasi
+libindi-asi
 libindi-eqmod
 libindi-gpsd
-libindi-asi
-chrony
 gpsd

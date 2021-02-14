@@ -6,3 +6,4 @@ sudo
 yay
 inetutils
 netctl
+chrony
