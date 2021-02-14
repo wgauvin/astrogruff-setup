@@ -29,7 +29,7 @@ body {
   font-weight: bolder;
 }
 
-#astrogruff_connect_bttn {
+.astrogruff_connect_bttn {
   cursor: pointer;
   margin: 2px;
   padding: 5px 30px;
