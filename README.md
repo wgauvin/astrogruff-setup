@@ -180,4 +180,33 @@ Install favourite theme, but get the `candy-icons` as they are great with a dark
 
 # Setting up WiFi Hotspot
 
+Install the necessary packages, this includes the `dkms` driver for the USB WiFi
+
+```
+yay -S - < packages/network-packages.txt
+```
+
+Reboot the system so the new module is loaded.
+
+There is a problem with the `linux-firmware` as of Feb 2021 in which the built in RPi4 WiFi
+doesn't load. This can be solved by following the solution this forum (https://archlinuxarm.org/forum/viewtopic.php?f=15&t=15120&sid=2d6eabfb43cbb6009e84b45e8c2e6523)
+
+```
+sudo rm /usr/lib/firmware/brcm/brcmfmac43455-sdio.Raspberry\ Pi\ Foundation-Raspberry\ Pi\ 4\ Model\ B.txt
+sudo rm /usr/lib/firmware/brcm/brcmfmac43455-sdio.raspberrypi,3-model-a-plus.txt
+sudo rm /usr/lib/firmware/brcm/brcmfmac43455-sdio.raspberrypi,3-model-b-plus.txt
+sudo rm /usr/lib/firmware/brcm/brcmfmac43455-sdio.raspberrypi,4-model-b.txt
+```
+
+There should only be one file for `brcmfmac43455` and that should be:
+`/usr/lib/firmware/brcm/brcmfmac43455-sdio.MINIX-NEO Z83-4.txt`
+
+To be able to use `nmcli` to update networks without the need of `sudo` make sure the
+user in `network` group and that a `polkit` policy is place.
+
+```
+sudo usermod -a -G network astrogruff
+sudo cp etc/polkit-1/rules.d/* /etc/polkit-1/rules.d/
+```
+
 <TODO - use the linux-wifi-hotspot and set up service>
