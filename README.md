@@ -69,9 +69,22 @@ yay -S - < packages/vnc-packages.txt
 ```
 
 To enable the `vnc` to come up as part of the X11 startup need to add
-an autologin for the sddm (see above and in the SDDM wiki), using a dummy screen ()
+an autologin for the sddm, using a dummy screen.
 
 Copy the contents `etc/X11/xorg.conf.d/` to `/etc/X11/xorg.conf.d/`
+
+Copy the contents `etc/sddm.conf.d/` to `/etc/sddm.conf.d/`
+Restart `sddm`
+
+```
+sudo systemctl restart sddm
+```
+
+Check that the Plasma session for `astrogruff` is started.
+
+```
+ps -eaf |grep plasma
+```
 
 As `astrogruff` set the VNC password via
 
