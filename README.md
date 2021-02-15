@@ -36,6 +36,12 @@ using the `linux-rpi4-mainline` kernel.
 pacman -S - < packages/system-packages.txt
 ```
 
+Copy `etc/hosts` from the repo to `/etc/hosts`. This should allow
+accessing the system the name `astrogruff2`
+
+Setup  `/home/astrogruff/.ssh/authorized_keys` with the list of SSH
+keys that will be valid for logging, otherwise ssh will require a password.
+
 Reboot server, and log in as `astrogruff` and then install
 the useful packages.
 
@@ -89,8 +95,25 @@ sudo systemctl daemon-reload
 sudo systemctl enable --now novnc.service
 ```
 
-* TODO - document nginx.conf
-* TODO - make sure set up SSL
+Copy `etc/nginx/` to `/etc/nginx`
+
+Ensure that the SSL certificates and keys are copied to the appropriate
+places. These are stored separately and are out of scope of this document.
+
+Once the `nginx` is configured and the SSL certificates are in place, run
+the following command to verify that `nginx` is configured correctly.
+
+```
+sudo nginx -t
+```
+
+Once configured correctly then enable the service:
+
+```
+sudo systemctl enable --now nginx
+```
+
+This should then be accessable via a browser to https://astrogruff2/index.html. The `noVNC` can be checked by clicking on the **Desktop** button.
 
 # Setting up Astro parts
 
