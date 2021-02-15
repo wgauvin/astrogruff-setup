@@ -1,4 +1,5 @@
 xf86-video-dummy
+python-numpy
 x11vnc
 novnc
 nginx-mainline
