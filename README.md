@@ -101,7 +101,7 @@ sudo systemctl daemon-reload
 sudo systemctl enable --now x11vnc.service
 ```
 
-Copy `/etc/systemd/system/novnc.service` to `/etc/systemd/system` and then enable service:
+Copy `etc/systemd/system/novnc.service` to `/etc/systemd/system` and then enable service:
 
 ```
 sudo systemctl daemon-reload
@@ -155,7 +155,7 @@ sudo usermod -a -G uucp astrogruff
 
 ## Setup of GPSD
 
-Copy `etc/defaults/gpsd` to `/etc/defaults/gpsd`
+Copy `etc/default/gpsd` to `/etc/default/gpsd`
 
 Enable the `gpsd.socket` with:
 
