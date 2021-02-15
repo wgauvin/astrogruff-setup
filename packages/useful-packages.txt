@@ -2,6 +2,6 @@ vim
 nmap
 the_silver_searcher
 zsh
-antigen-git
+antigen
 lshw
 
