@@ -79,7 +79,7 @@ As `astrogruff` set the VNC password via
 x11vnc -storepasswd
 ```
 
-* copy `astrogruff/.vnc/` file `${HOME}/.vnc/`
+* copy `astrogruff/vnc/` file `${HOME}/.vnc/`
 * copy `etc/systemd/system/x11vnc.service.d/` to `/etc/systemd/system/x11vnc.service.d/`
 * enable the `x11vnc.service` using the following commands:
 
