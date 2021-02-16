@@ -4,4 +4,6 @@ the_silver_searcher
 zsh
 antigen
 lshw
+python
+python-pip
 

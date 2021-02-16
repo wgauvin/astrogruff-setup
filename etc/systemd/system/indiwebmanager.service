@@ -1,0 +1,14 @@
+[Unit]
+Description=INDI Web Manager
+After=multi-user.target
+
+[Service]
+Type=idle
+User=astrogruff
+ExecStart=/usr/bin/indi-web -v
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+

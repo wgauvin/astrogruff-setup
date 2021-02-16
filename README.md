@@ -37,7 +37,7 @@ pacman -S - < packages/system-packages.txt
 ```
 
 Copy `etc/hosts` from the repo to `/etc/hosts`. This should allow
-accessing the system the name `astrogruff2`
+accessing the system the name `astrogruff`
 
 Setup  `/home/astrogruff/.ssh/authorized_keys` with the list of SSH
 keys that will be valid for logging, otherwise ssh will require a password.
@@ -108,14 +108,71 @@ sudo systemctl daemon-reload
 sudo systemctl enable --now novnc.service
 ```
 
-Copy `etc/nginx/` to `/etc/nginx`
+## Create SSL Cert
 
-Ensure that the SSL certificates and keys are copied to the appropriate
-places. These are stored separately and are out of scope of this document.
+This process uses a self signed CA certificate (this has already been)
+generated and not documented here.
 
-Once the `nginx` is configured and the SSL certificates are in place, run
+Generate private key
+```
+openssl genrsa -out astrogruff.local.key 2048
+```
+
+Extract public key
+```
+openssl rsa -in astrogruff.local.key -pubout -out astrogruff.local.pub
+```
+
+Create CSR
+```
+openssl req -new -key astrogruff.local.key -out astrogruff.local.csr
+
+openssl req \
+    -new \
+    -sha256 \
+    -key astrogruff.local.key \
+    -out astrogruff.local.csr
+
+openssl x509 -req \
+    -extensions ca_ext \
+    -extfile astrogruff.local.cnf \
+    -in astrogruff.local.csr \
+    -CA personal-ca.pem -CAkey personal-ca.key -CAcreateserial \
+    -out astrogruff.local.crt \
+    -days 500 -sha256
+```
+
+install CA cert
+```
+sudo trust anchor --store personal-ca.crt
+```
+
+Copy the signed cert to `/etc/ssl/certs/` and copy the private key to
+`/etc/ssl/private/`
+
+## Setup Nginx
+
+Backup the original Nginx configuration and copy over configuration,
+enable the main site.
+
+```
+sudo mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bck
+sudo cp -R etc/nginx/ /etc/nginx
+sudo mkdir -p /etc/nginx/sites-enabled
+sudo mkdir -p /etc/nginx/ssl
+cd /etc/nginx/site-enabled
+sudo ln -s ../sites-available/astrogruff.conf
+```
+
+The `security.conf` requires a `dhparam.pem` file, this is used for
+shared secrets. This needs to be generated but takes a few minutes
+
+```
+sudo openssl dhparam -out /etc/nginx/ssl/dhparam-2048.pem 2048
+```
+
+Once the `nginx` is configured and the SSL certificates are in place run
 the following command to verify that `nginx` is configured correctly.
-
 ```
 sudo nginx -t
 ```
@@ -124,6 +181,24 @@ Once configured correctly then enable the service:
 
 ```
 sudo systemctl enable --now nginx
+```
+
+## Setup the web app
+
+Create the directory and copy the web contents for the astrogruff
+landing page
+
+```
+sudo mkdir -p /usr/share/webapps/astrogruff/
+sudo cp -R web/* /usr/share/webapps/astrogruff
+```
+
+Install and setup the `indiwebmanager`
+
+```
+sudo pip install indiweb
+sudo cp etc/systemd/system/indiwebmanager.service /etc/systemd/system/
+sudo systemctl start indiwebmanager
 ```
 
 This should then be accessable via a browser to https://astrogruff2/index.html. The `noVNC` can be checked by clicking on the **Desktop** button.
@@ -163,7 +238,7 @@ Enable the `gpsd.socket` with:
 sudo systemctl enable --now gpsd.socket
 ```
 
-## Desktop setup
+# Desktop setup
 
 Install `desktop-packages.txt`
 
@@ -210,3 +285,5 @@ sudo cp etc/polkit-1/rules.d/* /etc/polkit-1/rules.d/
 ```
 
 <TODO - use the linux-wifi-hotspot and set up service>
+
+
