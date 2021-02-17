@@ -5,3 +5,5 @@ libindi-asi
 libindi-eqmod
 libindi-gpsd
 gpsd
+python-cairo
+python-gobject
