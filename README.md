@@ -287,3 +287,10 @@ sudo cp etc/polkit-1/rules.d/* /etc/polkit-1/rules.d/
 <TODO - use the linux-wifi-hotspot and set up service>
 
 
+# Other things
+
+Disable Bluetooth (not needed)
+```
+sudo systemctl disable attach-bluetooth.service
+sudo systemctl disable bluetooth.service
+```
