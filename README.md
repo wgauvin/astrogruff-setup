@@ -284,8 +284,23 @@ sudo usermod -a -G network astrogruff
 sudo cp etc/polkit-1/rules.d/* /etc/polkit-1/rules.d/
 ```
 
-<TODO - use the linux-wifi-hotspot and set up service>
+To add a WiFi hotspot on device `wlp1s0u1u2` do the following:
 
+Copy the `etc/NetworkManager/dnsmasq-shared.d/` to `/etc/NetworkManager/dnsmasq-shared.d/`
+then restart Network Manager. This configuration will allow for `.local` and `.astrogruff` to
+resolve to the RPi4
+
+```
+sudo systemctl restart NetworkManager
+```
+
+Do the following to set up the hotspot.
+```
+nmcli dev wifi hotspot ifname wlp1s0u1u2 con-name astrogruff-hotspot ssid astrogruff-hotspot password <Password>
+nmcli connection modify astrogruff-hotspot connection.autoconnect yes
+nmcli connection modify astrogruff-hotspot connection.autoconnect-priority 99
+nmcli connection modify astrogruff-hotspot connection.interface-name wlp1s0u1u2
+```
 
 # Other things
 
