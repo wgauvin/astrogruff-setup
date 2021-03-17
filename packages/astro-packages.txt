@@ -7,3 +7,4 @@ libindi-gpsd
 gpsd
 python-cairo
 python-gobject
+gsc
