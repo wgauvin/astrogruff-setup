@@ -4,6 +4,9 @@ libasi
 libindi-asi
 libindi-eqmod
 libindi-gpsd
+libqhy
+libindi-qhy
+fxload
 gpsd
 python-cairo
 python-gobject
