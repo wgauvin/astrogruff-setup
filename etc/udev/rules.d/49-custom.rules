@@ -9,8 +9,8 @@ SUBSYSTEM=="usb", ATTRS{manufacturer}=="ZWO", ATTRS{idVendor}=="03c3", ATTRS{idP
 # USB Serial devices
 KERNEL=="ttyUSB[0-9]*", SUBSYSTEM=="tty", ATTRS{manufacturer}=="Prolific Technology Inc. ", ATTRS{idProduct}=="2303", ATTRS{idVendor}=="067b", ENV{USB_HUB_TYPE}="067b:2303"
 
-ENV{USB_HUB_TYPE}=="067b:2303", KERNEL=="ttyUSB[0-9]*", SUBSYSTEM=="tty", KERNELS=="1-1.4:1.0", SYMLINK+="gps", GROUP="uucp", MODE="0660"
-ENV{USB_HUB_TYPE}=="067b:2303", KERNEL=="ttyUSB[0-9]*", SUBSYSTEM=="tty", KERNELS=="1-1.1.[1-6]*:1.0", SYMLINK+="eq6r_mount eqmount", GROUP="uucp", MODE="0660"
+ENV{USB_HUB_TYPE}=="067b:2303", KERNEL=="ttyUSB[0-9]*", SUBSYSTEM=="tty", KERNELS=="1-1.2:1.0", SYMLINK+="gps", GROUP="uucp", MODE="0660"
+ENV{USB_HUB_TYPE}=="067b:2303", KERNEL=="ttyUSB[0-9]*", SUBSYSTEM=="tty", KERNELS=="1-1.[1-4]*.[1-6]*:1.0", SYMLINK+="eq6r_mount eqmount", GROUP="uucp", MODE="0660"
 
 KERNEL=="ttyUSB[0-9]*", SUBSYSTEM=="tty", ATTRS{manufacturer}=="Pegasus Astro", ATTRS{idProduct}=="6015", ATTRS{idVendor}=="0403", SYMLINK+="upbv2 powerbox", GROUP="uucp", MODE="0660"
 KERNEL=="ttyUSB[0-9]*", SUBSYSTEM=="tty", ATTRS{manufacturer}=="Silicon Labs", ATTRS{idProduct}=="ea60", ATTRS{idVendor}=="10c4", SYMLINK+="sesto focuser", GROUP="uucp", MODE="0660"

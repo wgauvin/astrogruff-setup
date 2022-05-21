@@ -50,6 +50,7 @@ class Worker():
                     for b in response.iter_content(chunk_size=8192):
                         out.write(b)
             elif response.status_code == 404:
+                print(f"{self.worker_prefix} Index file {f} does not exist")
                 return
             else:
                 response.raise_for_status()

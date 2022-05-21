@@ -1,5 +1,6 @@
-openresolv
-haveged
-linux-wifi-hotspot
-macchanger
+#openresolv
+#haveged
+#linux-wifi-hotspot
+#macchanger
 rtl88x2bu-dkms-git
+dnsmasq

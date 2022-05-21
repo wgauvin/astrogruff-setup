@@ -3,8 +3,10 @@ xplanet
 libasi
 libindi-asi
 libindi-eqmod
+libindi-gphoto
 libindi-gpsd
+libqhy
+libindi-qhy
 gpsd
-python-cairo
-python-gobject
 gsc
+fxload

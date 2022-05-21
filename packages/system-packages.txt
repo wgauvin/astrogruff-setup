@@ -1,5 +1,3 @@
-linux-rpi4-mainline
-linux-rpi4-mainline-headers
 base-devel
 dkms
 sudo
